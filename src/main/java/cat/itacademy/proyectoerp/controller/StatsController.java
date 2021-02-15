@@ -1,6 +1,9 @@
 package cat.itacademy.proyectoerp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,10 +29,23 @@ public class StatsController {
 
 	    //TODO 
 	
+		
+	    @GetMapping (value="/orders/{idClient}")
+	    public ResponseEntity<WrapperResponse> getOrdersOfPeriod(@PathVariable Long idClient) {
+	        
+	    	
+	        return null;
+	    }
+
+	
 	
 		//Get the accumulated number of the client's orders 
 	
 	 	//TODO 
+	    
+	    
+	    
+	    
 	
 	
 	
