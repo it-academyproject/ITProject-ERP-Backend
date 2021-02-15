@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import cat.itacademy.proyectoerp.service.StatsServiceImpl;
+import cat.itacademy.proyectoerp.util.WrapperResponse;
 
 
 
