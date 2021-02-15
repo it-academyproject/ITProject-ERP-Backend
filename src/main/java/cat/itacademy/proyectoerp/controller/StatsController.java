@@ -1,14 +1,20 @@
 package cat.itacademy.proyectoerp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
-import cat.itacademy.proyectoerp.service.StatsServiceImpl;
+import cat.itacademy.proyectoerp.dto.StatsClientOrderAccumDTO;
+import cat.itacademy.proyectoerp.dto.StatsClientOrderTimeFrameDTO;
+import cat.itacademy.proyectoerp.dto.TimeFrameDTOImpl;
+import cat.itacademy.proyectoerp.service.StatsOrderServiceImpl;
 import cat.itacademy.proyectoerp.util.WrapperResponse;
 
 
@@ -20,22 +26,28 @@ import cat.itacademy.proyectoerp.util.WrapperResponse;
 public class StatsController {
 	
 	@Autowired
-	StatsServiceImpl statsService;
+	StatsOrderServiceImpl statsService;
 	
 	
 	//ORDER STATS  -> Only accessible by a Client (only by the one who does the request) and all Admins 
 	
 		
-		//Get the number of the client's orders for a period divided by a specific time frame (weekly, monthly, yearly)
+		//Get the number of the client's orders for a period divided by a specific time frame (weekly, monthly, yearly) 
 
 	    //TODO 
 	
 		
-	    @GetMapping (value="/orders/{idClient}")
-	    public ResponseEntity<WrapperResponse> getOrdersOfPeriod(@PathVariable Long idClient) {
+	    @PutMapping (value="/orders/{idClient}")
+	    public ResponseEntity<WrapperResponse<StatsClientOrderTimeFrameDTO>> getClientOrdersTimeFrame(@PathVariable Long idClient, @RequestBody TimeFrameDTOImpl timeFrameDTO) {
 	        
+	   
 	    	
-	        return null;
+	    	
+	    	
+	    	//new WrapperResponse<>(true, "stats fetched", gameMapper.fromAllEntitiesByUser(user, listGamesByUser))
+			//		.createResponse();
+	       
+	    	return null;
 	    }
 
 	
@@ -45,38 +57,54 @@ public class StatsController {
 	 	//TODO 
 	    
 	    
+	    @PutMapping (value="/orders/accum/{idClient}")
+	    public ResponseEntity<WrapperResponse<StatsClientOrderAccumDTO>> getAccumClientOrders(@PathVariable Long idClient) {
+	        
+	    	//new WrapperResponse<>(true, "stats fetched", gameMapper.fromAllEntitiesByUser(user, listGamesByUser))
+			//		.createResponse();
+	       
+	    	
+	        return null;
+	    }
 	    
-	    
 	
 	
 	
 	
 	
-	
-		//Get the number of all orders of all clients for a period divided by a specific time frame (weekly, monthly, yearly) -> Only accessible by all Admins
-	
-	    //TODO 
-
 	
 		//Get the number of all orders of all clients for a period divided by a specific time frame (weekly, monthly, yearly) [Page of Clients] -> Only accessible by all Admins
-		
+	
 	    //TODO 
-
-		//Get the accumulated number of all orders of all clients -> Only accessible by all Admins
-	
-	 	//TODO 
-	
-	
-		//Get the accumulated number of all orders classified by all clients -> Only accessible by all Admins
-		
-	 	//TODO 
          
-		//Get the accumulated number of all orders classified by  clients [Page of Clients] -> Only accessible by all Admins
+	  
+	    /*@PutMapping (value="/orders")
+	    public ResponseEntity<WrapperResponse> getAllClientOrdersTimeFrame(@RequestBody TimeFramePageDTO) {
+	        
+	    	  Pageable page = PageRequest.of(pageNumber, pageSize);
+	    	  
+	        return null;
+	    }
+
+	    */
+	    
 		
+
+		//Get the accumulated number of all orders classified by clients [Page of Clients]-> Only accessible by all Admins
+	
 	 	//TODO 
 	
+	    
+	    /*
+	    @PutMapping (value="/orders/accum")
+	    public ResponseEntity<WrapperResponse<null>> getAllAccumClientOrders(@RequestBody PageDTO) {
+	        
+	    	
+	        return null;
+	    }
+
 	
-	
+	    */
 	
 	
 	//OVERALL STATS -> Only accessible by a Client (only by the one who does the request) and all Admins 
