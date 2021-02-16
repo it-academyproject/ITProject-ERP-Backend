@@ -1,5 +1,7 @@
 package cat.itacademy.proyectoerp.controller;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -38,13 +40,13 @@ public class StatsController {
 	
 		
 	    @PutMapping (value="/orders/{idClient}")
-	    public ResponseEntity<WrapperResponse<StatsClientOrderTimeFrameDTO>> getClientOrdersTimeFrame(@PathVariable Long idClient, @RequestBody TimeFrameDTOImpl timeFrameDTO) {
+	    public ResponseEntity<WrapperResponse<StatsClientOrderTimeFrameDTO>> getClientOrdersTimeFrame(@PathVariable UUID idClient, @RequestBody TimeFrameDTOImpl timeFrameDTO) {
 	        
 	   
 	    	
 	    	
 	    	
-	    	//new WrapperResponse<>(true, "stats fetched", gameMapper.fromAllEntitiesByUser(user, listGamesByUser))
+	    	//new WrapperResponse<>(true, "statistics fetched", gameMapper.fromAllEntitiesByUser(user, listGamesByUser))
 			//		.createResponse();
 	       
 	    	return null;
@@ -58,9 +60,9 @@ public class StatsController {
 	    
 	    
 	    @PutMapping (value="/orders/accum/{idClient}")
-	    public ResponseEntity<WrapperResponse<StatsClientOrderAccumDTO>> getAccumClientOrders(@PathVariable Long idClient) {
+	    public ResponseEntity<WrapperResponse<StatsClientOrderAccumDTO>> getAccumClientOrders(@PathVariable UUID idClient) {
 	        
-	    	//new WrapperResponse<>(true, "stats fetched", gameMapper.fromAllEntitiesByUser(user, listGamesByUser))
+	    	//new WrapperResponse<>(true, "statistics fetched", gameMapper.fromAllEntitiesByUser(user, listGamesByUser))
 			//		.createResponse();
 	       
 	    	
