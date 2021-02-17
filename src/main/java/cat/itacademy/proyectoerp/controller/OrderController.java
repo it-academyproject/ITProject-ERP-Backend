@@ -79,6 +79,11 @@ public class OrderController {
 	}
 
 
+	@GetMapping("/orders")
+	public HashMap<String, Object> findOrders() {
+
+	}
+
 	/**
 	 * Update order
 	 * 
