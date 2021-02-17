@@ -1,3 +1,4 @@
+
 package cat.itacademy.proyectoerp.service;
 
 import java.util.List;
@@ -50,9 +51,8 @@ public class ClientServiceImpl implements IClientService {
 
 	@Override
 	public void updateClient(Client client) {
-		  repository.findById(client.getClientId()).map(clientDB -> {
+		  repository.findById(client.getid()).map(clientDB -> {
               BeanUtils.copyProperties(client, clientDB);
-              ;
               return repository.save(clientDB);
           }
   ).orElseThrow(() -> new ArgumentNotFoundException("Client not found"));
@@ -66,3 +66,4 @@ public class ClientServiceImpl implements IClientService {
 	}
 
 }
+
