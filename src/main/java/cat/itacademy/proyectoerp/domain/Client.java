@@ -25,15 +25,9 @@ public class Client {
 	
 	//Client Attributes
 
-    @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-        name = "UUID",
-        strategy = "org.hibernate.id.UUIDGenerator"
-    )
-    @Column(name = "id", updatable = false, nullable = false)
-    private UUID id;
-
+	@Id
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private UUID id;
 	private String address;
 	private String dni;
 	private String image;
@@ -73,6 +67,7 @@ public class Client {
 	/**
 	 * @return client id
 	 */
+
 
 	public UUID getid() {
 		return id;
