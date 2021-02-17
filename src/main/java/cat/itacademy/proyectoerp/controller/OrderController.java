@@ -81,7 +81,7 @@ public class OrderController {
 
 	@GetMapping("/orders")
 	public HashMap<String, Object> findOrders() {
-
+		HashMap<String, Object> map = new HashMap<String, Object>();
 	}
 
 	/**
