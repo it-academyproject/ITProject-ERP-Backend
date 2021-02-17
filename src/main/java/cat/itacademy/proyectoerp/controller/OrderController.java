@@ -82,6 +82,16 @@ public class OrderController {
 	@GetMapping("/orders")
 	public HashMap<String, Object> findOrders() {
 		HashMap<String, Object> map = new HashMap<String, Object>();
+		List<Order> ordersList = orderService.findAllOrders();
+		try {
+			map.put("success", "true");
+			map.put("message", "order found");
+			map.put("order", ordersList);
+		} catch (Exception e) {
+			map.put("success", "false");
+			map.put("message", "Error: " + e.getMessage());
+		}
+		return map;
 	}
 
 	/**
