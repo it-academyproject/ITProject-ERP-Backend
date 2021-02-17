@@ -1,6 +1,7 @@
 package cat.itacademy.proyectoerp.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
