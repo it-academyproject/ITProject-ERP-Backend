@@ -80,6 +80,11 @@ public class OrderController {
 	}
 
 
+	/**
+	 * Get all orders
+	 *
+	 * @return order list
+	 */
 	@GetMapping("/orders")
 	public HashMap<String, Object> findOrders() {
 		HashMap<String, Object> map = new HashMap<String, Object>();
