@@ -27,6 +27,12 @@ public class StatsClientOrderTimeFrameDTO {
 	public void setListOrdersPeriod(List<Integer> listOrdersPeriod) {
 		this.listOrdersPeriod = listOrdersPeriod;
 	}
+	public StatsClientOrderTimeFrameDTO(UUID idClient, String timeFrame, List<Integer> listOrdersPeriod) {
+		super();
+		this.idClient = idClient;
+		this.timeFrame = timeFrame;
+		this.listOrdersPeriod = listOrdersPeriod;
+	}
 	
 	
 
