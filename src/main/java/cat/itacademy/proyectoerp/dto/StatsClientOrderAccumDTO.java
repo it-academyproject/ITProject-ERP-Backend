@@ -1,13 +1,16 @@
 package cat.itacademy.proyectoerp.dto;
 
+import java.util.UUID;
+
 public class StatsClientOrderAccumDTO {
 	
-	private Long idClient;
+	private UUID idClient;
 	private Integer ordersAccum;
-	public Long getIdClient() {
+	
+	public UUID getIdClient() {
 		return idClient;
 	}
-	public void setIdClient(Long idClient) {
+	public void setIdClient(UUID idClient) {
 		this.idClient = idClient;
 	}
 	public Integer getOrdersAccum() {
