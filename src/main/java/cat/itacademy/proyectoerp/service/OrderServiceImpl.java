@@ -1,6 +1,9 @@
 package cat.itacademy.proyectoerp.service;
 
+import java.time.LocalDate;
+import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,5 +56,13 @@ public class OrderServiceImpl implements IOrderService{
 	}
 
 
+	//ORDER STATS
+	//Get the Orders of a client  created between two dates
+	
+	public Optional<List<Order>> getOrdersClientPeriod(UUID idClient, Date periodInit, Date periodFinal) {
+
+		return iOrderRepository.findOrderByClientDate(idClient, periodInit, periodFinal);
+	}
+	
 
 }
