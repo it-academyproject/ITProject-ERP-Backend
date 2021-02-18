@@ -1,17 +1,18 @@
 package cat.itacademy.proyectoerp.dto;
 
 import java.util.List;
+import java.util.UUID;
 
 public class StatsClientOrderTimeFrameDTO {
 	
-	private Long idClient;
+	private UUID idClient;
 	private String timeFrame;
 	private List<Integer> listOrdersPeriod;
 	
-	public Long getIdClient() {
+	public UUID getIdClient() {
 		return idClient;
 	}
-	public void setIdClient(Long idClient) {
+	public void setIdClient(UUID idClient) {
 		this.idClient = idClient;
 	}
 	public String getTimeFrame() {
