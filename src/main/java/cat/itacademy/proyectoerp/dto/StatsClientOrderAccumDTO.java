@@ -4,8 +4,15 @@ import java.util.UUID;
 
 public class StatsClientOrderAccumDTO {
 	
+	
 	private UUID idClient;
 	private Integer ordersAccum;
+	
+	public StatsClientOrderAccumDTO(UUID idClient, Integer ordersAccum) {
+		super();
+		this.idClient = idClient;
+		this.ordersAccum = ordersAccum;
+	}
 	
 	public UUID getIdClient() {
 		return idClient;
