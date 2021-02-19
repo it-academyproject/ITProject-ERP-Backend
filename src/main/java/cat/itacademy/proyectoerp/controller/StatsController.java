@@ -39,18 +39,15 @@ public class StatsController {
 	    //TODO 
 	
 		
-	    @PutMapping (value="/orders/{idClient}")
-	    public ResponseEntity<WrapperResponse<StatsClientOrderTimeFrameDTO>> getClientOrdersTimeFrame(@PathVariable UUID idClient, @RequestBody TimeFrameDTOImpl timeFrameDTO) {
-	        
-	   
-	    	
-	    	
-	    	
-	    	//new WrapperResponse<>(true, "statistics fetched", gameMapper.fromAllEntitiesByUser(user, listGamesByUser))
-			//		.createResponse();
-	       
-	    	return null;
-	    }
+		@PutMapping(value = "/orders/{idClient}")
+		public ResponseEntity<WrapperResponse<StatsClientOrderTimeFrameDTO>> getClientOrdersTimeFrame(
+				@PathVariable UUID idClient, @RequestBody TimeFrameDTOImpl timeFrameDTO) {
+
+			StatsClientOrderTimeFrameDTO objectResponse = statsService.getClientOrdersTimeFrame(idClient, timeFrameDTO);
+
+			return new WrapperResponse<>(true, "order statistics fetched", objectResponse).createResponse();
+
+		}
 
 	
 	
@@ -59,16 +56,15 @@ public class StatsController {
 	 	//TODO 
 	    
 	    
-	    @PutMapping (value="/orders/accum/{idClient}")
-	    public ResponseEntity<WrapperResponse<StatsClientOrderAccumDTO>> getAccumClientOrders(@PathVariable UUID idClient) {
-	        
-	    	//new WrapperResponse<>(true, "statistics fetched", gameMapper.fromAllEntitiesByUser(user, listGamesByUser))
-			//		.createResponse();
-	       
-	    	
-	        return null;
-	    }
-	    
+		@PutMapping(value = "/orders/accum/{idClient}")
+		public ResponseEntity<WrapperResponse<StatsClientOrderAccumDTO>> getAccumClientOrders(
+				@PathVariable UUID idClient) {
+
+			StatsClientOrderAccumDTO objectResponse = statsService.getClientOrdersAccum(idClient);
+
+			return new WrapperResponse<>(true, "order statistics fetched", objectResponse).createResponse();
+
+		}
 	
 	
 	
