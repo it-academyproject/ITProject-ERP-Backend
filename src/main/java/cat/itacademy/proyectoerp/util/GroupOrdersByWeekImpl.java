@@ -11,6 +11,9 @@ import java.util.Locale;
 import cat.itacademy.proyectoerp.domain.Order;
 
 //Class responsible to group de Order List by Weeks and count the Orders for each week
+
+//TODO: If must be checked if the period is longer than a year
+
 public class GroupOrdersByWeekImpl implements IGroupOrdersByTimeFrame {
 
 	@Override
@@ -40,12 +43,12 @@ public class GroupOrdersByWeekImpl implements IGroupOrdersByTimeFrame {
 			
 		}
 		
-		return null;
+		return listCountOrders;
 
 	}
 	
 	
-	 public class WeekComparator implements Comparator<Order> {
+	 private class WeekComparator implements Comparator<Order> {
 
 	       	@Override
 			public int compare(Order o1, Order o2) {
