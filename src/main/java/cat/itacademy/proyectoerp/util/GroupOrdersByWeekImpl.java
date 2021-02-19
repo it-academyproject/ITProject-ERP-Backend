@@ -10,6 +10,7 @@ import java.util.Locale;
 
 import cat.itacademy.proyectoerp.domain.Order;
 
+//Class responsible to group de Order List by Weeks and count the Orders for each week
 public class GroupOrdersByWeekImpl implements IGroupOrdersByTimeFrame {
 
 	@Override
