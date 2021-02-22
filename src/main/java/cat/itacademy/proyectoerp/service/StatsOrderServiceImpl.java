@@ -6,22 +6,28 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import cat.itacademy.proyectoerp.domain.Client;
 import cat.itacademy.proyectoerp.domain.Order;
+import cat.itacademy.proyectoerp.dto.PageDTOImpl;
 import cat.itacademy.proyectoerp.dto.StatsClientOrderAccumDTO;
 import cat.itacademy.proyectoerp.dto.StatsClientOrderTimeFrameDTO;
 import cat.itacademy.proyectoerp.dto.TimeFrameDTOImpl;
+import cat.itacademy.proyectoerp.dto.TimeFramePageDTOImpl;
 import cat.itacademy.proyectoerp.exceptions.ArgumentNotFoundException;
 import cat.itacademy.proyectoerp.exceptions.ArgumentNotValidException;
 import cat.itacademy.proyectoerp.util.GroupOrdersByMonthImpl;
 import cat.itacademy.proyectoerp.util.GroupOrdersByWeekImpl;
 import cat.itacademy.proyectoerp.util.GroupOrdersByYearImpl;
 import cat.itacademy.proyectoerp.util.IGroupOrdersByTimeFrame;
-import cat.itacademy.proyectoerp.util.OrderValidatorImpl;
+import cat.itacademy.proyectoerp.util.PageValidator;
+
+import cat.itacademy.proyectoerp.util.TimeFrameValidatorImpl;
 
 @Service
 public class StatsOrderServiceImpl implements IStatsService {
@@ -33,14 +39,18 @@ public class StatsOrderServiceImpl implements IStatsService {
 	OrderServiceImpl orderService;
 	
 	@Autowired
-	OrderValidatorImpl orderValidator;
+	TimeFrameValidatorImpl timeFrameValidator;
+	
+	@Autowired
+	PageValidator pageValidator;
+	
 	
 	// Get the number of the client's orders for a period divided by a specific timeframe (weekly, monthly, yearly)
 
 	public StatsClientOrderTimeFrameDTO getClientOrdersTimeFrame(UUID idClient, TimeFrameDTOImpl timeFrameDTO) {
 
 		// Validate if the timeFrame is correct
-		if (orderValidator.checkNotValidTimeFrame(timeFrameDTO))
+		if (! timeFrameValidator.checkParamatersDTO(timeFrameDTO))
 			throw new ArgumentNotValidException("The specified timeframe is not valid. It must be: W or M or Y ");
 
 		// Check if the user exists. If not, throw exception ArgumentNotFoundException
@@ -96,7 +106,7 @@ public class StatsOrderServiceImpl implements IStatsService {
 		if (client.isEmpty())
 			throw new ArgumentNotFoundException("The client does not exist");
 
-		// If the user exists, get all orders of a client 
+		// If the client exists, get all orders of a client 
 		List<Order> listOrders = orderService.findAllOrders();
 
 		if (listOrders.isEmpty())
@@ -105,6 +115,115 @@ public class StatsOrderServiceImpl implements IStatsService {
 		// Create DTO: Count all accumulated orders into a list if there are orders
 		
 		return new StatsClientOrderAccumDTO(idClient,listOrders.size() );
+	}
+	
+	
+	
+	
+	//Get all orders of all (page) clients of the period and grouped by timeframe
+	
+	public List<StatsClientOrderTimeFrameDTO> getGroupClientOrdersTimeFrame( TimeFramePageDTOImpl timeFramePageDTO) {
+		
+		// Validate if the timeFrame is correct
+		if (!timeFrameValidator.checkParamatersDTO(timeFramePageDTO))				
+			
+			throw new ArgumentNotValidException("The specified timeframe is not valid. It must be: W or M or Y ");
+		
+						
+		
+		// Validate if the Page is correct
+		
+		if (!pageValidator.checkParametersDTO(timeFramePageDTO))
+			
+			throw new ArgumentNotValidException("The specified page is not valid ");
+		
+		
+		//Get all of id clients corresponding to the specified page
+		
+		 Pageable page = PageRequest.of(timeFramePageDTO.getPageNumber(), timeFramePageDTO.getPageSize());
+		
+		 List<Client> clientList = clientService.findAllClientsWithPagination(page).toList();
+		 
+		 if (clientList.isEmpty())
+				throw new ArgumentNotFoundException("There are no clients");
+		
+		//Get all orders of all page client of the period and grouped by timeframe
+		
+		 List<StatsClientOrderTimeFrameDTO> listStatsDTO = new ArrayList <StatsClientOrderTimeFrameDTO>();
+		 
+		 
+		 for (Client client: clientList) {
+			 
+			    Optional<List<Order>> listOrdersPeriod = orderService.getOrdersClientPeriod(client.getid(),
+					 timeFramePageDTO.getPeriodInit(), timeFramePageDTO.getPeriodFinal());
+
+				// Group all orders into a list if there are orders	and count the order for each timeframe	
+				
+					List<Integer> listCountOrder = new ArrayList<Integer>();
+					
+					if (timeFramePageDTO.getTimeFrame().equals("W")) {
+						
+				        IGroupOrdersByTimeFrame orderByWeek = new GroupOrdersByWeekImpl();
+				        listCountOrder =  orderByWeek.groupOrders(listOrdersPeriod.get());	
+				        
+					} else if (timeFramePageDTO.getTimeFrame().equals("M")) {
+						
+						IGroupOrdersByTimeFrame orderByMonth = new GroupOrdersByMonthImpl();
+				        listCountOrder =  orderByMonth.groupOrders(listOrdersPeriod.get());	
+						
+						
+					} else if (timeFramePageDTO.getTimeFrame().equals("Y")) {
+						
+						IGroupOrdersByTimeFrame orderByYear = new GroupOrdersByYearImpl();
+				        listCountOrder =  orderByYear.groupOrders(listOrdersPeriod.get());			 
+			 
+			 
+		              }
+					
+			listStatsDTO.add(new StatsClientOrderTimeFrameDTO(client.getid(),timeFramePageDTO.getTimeFrame(), listCountOrder));	
+					
+		 
+		 }
+		
+		// Create DTO	
+		return listStatsDTO;
+	}
+	
+	
+	
+	// Get the accumulated number of the orders of all (page) clients
+	
+	public List<StatsClientOrderAccumDTO> getGroupClientOrdersAccum(PageDTOImpl pageDTO) {
+
+		// Validate if the Page is correct
+
+		if (!pageValidator.checkParametersDTO(pageDTO))
+
+			throw new ArgumentNotValidException("The specified page is not valid ");
+
+		// Get all of id clients corresponding to the specified page
+
+		Pageable page = PageRequest.of(pageDTO.getPageNumber(), pageDTO.getPageSize());
+
+		List<Client> clientList = clientService.findAllClientsWithPagination(page).toList();
+
+		if (clientList.isEmpty())
+			throw new ArgumentNotFoundException("There are no clients");
+
+		// Get all accum orders of all (page9 clients of the period
+
+		List<StatsClientOrderAccumDTO> listStatsDTO = new ArrayList<StatsClientOrderAccumDTO>();
+
+		for (Client client : clientList) {
+
+			List<Order> listOrders = orderService.findAllOrders();
+
+			listStatsDTO.add(new StatsClientOrderAccumDTO(client.getid(), listOrders.size()));
+
+		}
+
+		// Create DTO
+		return listStatsDTO;
 	}
 	
 	

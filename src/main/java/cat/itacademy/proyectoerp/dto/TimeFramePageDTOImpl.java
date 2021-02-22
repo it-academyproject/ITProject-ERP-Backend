@@ -1,26 +1,27 @@
 package cat.itacademy.proyectoerp.dto;
 
-import java.time.LocalDate;
+import java.sql.Date;
+
 
 public class TimeFramePageDTOImpl implements IPageDTO, ITimeFrameDTO {
 
-	private LocalDate periodInit;
-	private LocalDate periodFinal;
+	private Date periodInit;
+	private Date periodFinal;
 	private String timeFrame;
 	private int pageNumber;
 	private int pageSize;
 	
 	
-	public LocalDate getPeriodInit() {
+	public Date getPeriodInit() {
 		return periodInit;
 	}
-	public void setPeriodInit(LocalDate periodInit) {
+	public void setPeriodInit(Date periodInit) {
 		this.periodInit = periodInit;
 	}
-	public LocalDate getPeriodFinal() {
+	public Date getPeriodFinal() {
 		return periodFinal;
 	}
-	public void setPeriodFinal(LocalDate periodFinal) {
+	public void setPeriodFinal(Date periodFinal) {
 		this.periodFinal = periodFinal;
 	}
 	public String getTimeFrame() {

@@ -1,12 +1,11 @@
 package cat.itacademy.proyectoerp.util;
 
 import java.sql.Date;
-import java.time.temporal.WeekFields;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 
 import cat.itacademy.proyectoerp.domain.Order;
 

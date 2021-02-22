@@ -1,5 +1,6 @@
 package cat.itacademy.proyectoerp.controller;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import cat.itacademy.proyectoerp.dto.StatsClientOrderAccumDTO;
 import cat.itacademy.proyectoerp.dto.StatsClientOrderTimeFrameDTO;
 import cat.itacademy.proyectoerp.dto.TimeFrameDTOImpl;
+import cat.itacademy.proyectoerp.dto.TimeFramePageDTOImpl;
 import cat.itacademy.proyectoerp.service.StatsOrderServiceImpl;
 import cat.itacademy.proyectoerp.util.WrapperResponse;
 
@@ -36,7 +38,7 @@ public class StatsController {
 		
 		//Get the number of the client's orders for a period divided by a specific time frame (weekly, monthly, yearly) 
 
-	    //TODO 
+	   
 	
 		
 		@PutMapping(value = "/orders/{idClient}")
@@ -53,7 +55,7 @@ public class StatsController {
 	
 		//Get the accumulated number of the client's orders 
 	
-	 	//TODO 
+	
 	    
 	    
 		@PutMapping(value = "/orders/accum/{idClient}")
@@ -71,24 +73,24 @@ public class StatsController {
 	
 	
 	
-		//Get the number of all orders of all clients for a period divided by a specific time frame (weekly, monthly, yearly) [Page of Clients] -> Only accessible by all Admins
+		//Get the number of all orders of all clients for a period and grouped by a specific time frame (weekly, monthly, yearly) [Page of Orders] -> Only accessible by all Admins
 	
 	    //TODO 
          
 	  
-	    /*@PutMapping (value="/orders")
-	    public ResponseEntity<WrapperResponse> getAllClientOrdersTimeFrame(@RequestBody TimeFramePageDTO) {
+	    @PutMapping (value= "/orders" )
+	    public ResponseEntity<WrapperResponse<List<StatsClientOrderTimeFrameDTO>>> getAllClientOrdersTimeFrame(@RequestBody TimeFramePageDTOImpl timeFramePageDTO) {
 	        
-	    	  Pageable page = PageRequest.of(pageNumber, pageSize);
+	    	List<StatsClientOrderTimeFrameDTO> objectResponse = statsService.getGroupClientOrdersTimeFrame(timeFramePageDTO);
 	    	  
-	        return null;
+	        return new WrapperResponse<>(true, "order statistics fetched", objectResponse).createResponse();
 	    }
 
-	    */
+	    
 	    
 		
 
-		//Get the accumulated number of all orders classified by clients [Page of Clients]-> Only accessible by all Admins
+		//Get the accumulated number of all orders classified by clients [Page of Orders]-> Only accessible by all Admins
 	
 	 	//TODO 
 	
@@ -96,7 +98,7 @@ public class StatsController {
 	    /*
 	    @PutMapping (value="/orders/accum")
 	    public ResponseEntity<WrapperResponse<null>> getAllAccumClientOrders(@RequestBody PageDTO) {
-	        
+	        Pageable page = PageRequest.of(pageNumber, pageSize);
 	    	
 	        return null;
 	    }

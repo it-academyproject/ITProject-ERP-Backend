@@ -12,4 +12,5 @@ import cat.itacademy.proyectoerp.domain.Client;
 @Repository
 public interface ClientRepository extends JpaRepository<Client,UUID> {
 
+   
 }

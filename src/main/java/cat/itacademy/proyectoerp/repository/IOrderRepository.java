@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -17,8 +18,9 @@ public interface IOrderRepository extends JpaRepository<Order, UUID>{
 
 //ORDER STATS
 	
-//Get the orders of a client created between two dates and order by desc
+   //Get the orders of a client created between two dates and order by desc
 	@Query("SELECT o FROM Order o WHERE o.clientId  = ?1 AND o.date >= ?2 AND o.date =< ?3" + "ORDER BY o.date DESC")
 	Optional<List<Order>> findOrderByClientDate(UUID idClient, Date periodInit, Date periodFinal);
 
+	
 }

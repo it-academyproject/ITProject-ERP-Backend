@@ -10,7 +10,7 @@ import java.util.Locale;
 
 import cat.itacademy.proyectoerp.domain.Order;
 
-//Class responsible to group de Order List by Weeks and count the Orders for each week
+//Class responsible to group the Order List by Weeks and count the Orders for each week
 
 //TODO: If must be checked if the period is longer than a year
 

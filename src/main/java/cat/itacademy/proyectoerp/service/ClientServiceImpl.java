@@ -7,6 +7,8 @@ import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import cat.itacademy.proyectoerp.repository.ClientRepository;
@@ -62,6 +64,13 @@ public class ClientServiceImpl implements IClientService {
 	@Override
 	public void deleteClient(UUID id) {
 		repository.deleteById(id);
+		
+	}
+	
+	
+	public Page<Client> findAllClientsWithPagination (Pageable page) {
+		
+		return repository.findAll(page);
 		
 	}
 
