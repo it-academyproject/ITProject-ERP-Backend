@@ -106,18 +106,6 @@ public class OrderServiceImpl implements IOrderService{
 		
 	}
 
-	/**@Override
-	public boolean listIsValid(List<String> productsId) {
-		boolean answer = true;
-		for (String id : productsId) {
-			Optional<Product> tempProduct = iProductRepository.findById(Integer.parseInt(id));
-			if (tempProduct.isEmpty()) {
-				answer = false;
-			}
-		}
-		return answer;
-	}*/
-
 	@Override
 	public List<Order> findOrdersByStatus(OrderStatus status) {
 		if(iOrderRepository.findOrdersByStatus(status) == null){
