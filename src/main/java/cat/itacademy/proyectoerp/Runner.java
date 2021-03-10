@@ -89,22 +89,20 @@ public class Runner implements CommandLineRunner {
 			productService.createProduct(productTwo);
 
 			// Initialize two orders
-
 			List<String> productsId = new ArrayList<String>(Arrays.asList("1", "2"));
-
 			Date today = new Date();
 
+			List<Product> productListOne = new ArrayList<Product>(Arrays.asList(productOne, productTwo));
+			List<Product> productListTwo = new ArrayList<Product>(Arrays.asList(productOne, productTwo));
+
 			Order orderOne = new Order(UUID.randomUUID(), "1", clientOne.getid().toString(), today, OrderStatus.COMPLETED,
-					productsId);
+							productListOne);
 			orderService.createOrder(orderOne);
 
 			Order orderTwo = new Order(UUID.randomUUID(), "1", clientTwo.getid().toString(), today, OrderStatus.IN_DELIVERY,
-					productsId);
+							productListTwo);
 			orderService.createOrder(orderTwo);
 		}
-		
-		
-
 	}
 
 }

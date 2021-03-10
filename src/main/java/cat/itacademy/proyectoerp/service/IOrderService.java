@@ -17,8 +17,6 @@ public interface IOrderService {
 	public Order updateOrder(Order order);
 
 	public void deleteOrder(UUID id);
-	
-	public boolean listIsValid(List<String> productsId);
 
 	public List<Order> findOrdersByStatus(OrderStatus status);
 

@@ -36,8 +36,8 @@ public class OrderServiceImpl implements IOrderService{
 	public Order createOrder(Order order) {
 		Optional<Client> tempClient = iClientRepository.findById(UUID.fromString(order.getClientId()));
 		long miliseconds = System.currentTimeMillis();
-		 Date actualDate = new Date(miliseconds);
-		 //checks if data is valid
+		Date actualDate = new Date(miliseconds);
+
 		if (order.getClientId() == null || tempClient.isEmpty()) {
 			throw new ArgumentNotValidException("Order must have a client.");
 
@@ -50,12 +50,9 @@ public class OrderServiceImpl implements IOrderService{
 		} else if (order.getProducts() == null) {
 			throw new ArgumentNotValidException("Orders must have a product list.");
 
-		} else if (!listIsValid(order.getProducts())){
-			throw new ArgumentNotValidException("Invalid products in the order");
 		} else {
 			return iOrderRepository.save(order);
 		}
-		
 	}
 
 	@Override
@@ -94,7 +91,7 @@ public class OrderServiceImpl implements IOrderService{
 			throw new ArgumentNotValidException("Status can't be null");
 		}
 		orderToUpdate.setStatus(order.getStatus());
-		if (listIsValid(order.getProducts())) {
+		if (!order.getProducts().isEmpty()) {
 			orderToUpdate.setProducts(order.getProducts());
 		} else {
 			throw new ArgumentNotValidException("Invalid products in the order");
@@ -109,7 +106,7 @@ public class OrderServiceImpl implements IOrderService{
 		
 	}
 
-	@Override
+	/**@Override
 	public boolean listIsValid(List<String> productsId) {
 		boolean answer = true;
 		for (String id : productsId) {
@@ -119,7 +116,7 @@ public class OrderServiceImpl implements IOrderService{
 			}
 		}
 		return answer;
-	}
+	}*/
 
 	@Override
 	public List<Order> findOrdersByStatus(OrderStatus status) {

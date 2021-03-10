@@ -32,8 +32,13 @@ public class Order {
 	@Column
 	@Enumerated(EnumType.STRING)
 	private OrderStatus status;
-	@Convert(converter = StringToListConverter.class)
-	private List<String> productsId;
+
+	//@Convert(converter = StringToListConverter.class)
+	//private List<String> productsId;
+	@OneToMany(mappedBy = "order_id", cascade = {
+					CascadeType.ALL
+	})
+	private List<Product> products;
 
 	/** @ManyToOne
 	@JsonIgnore
@@ -43,135 +48,71 @@ public class Order {
 	public Order() {
 	}
 
-	/**
-	 * Constructor with all the parameters.
-	 * 
-	 * @param employeeId employee responsible
-	 * @param clientId   client id
-	 * @param date       date of the emitted order
-	 * @param status     order status
-	 * @param productsId products id included in order
-	 */
 	
-	
-	public Order(String employeeId, String clientId, Date date, OrderStatus status, List<String> productsId) {
+	public Order(String employeeId, String clientId, Date date, OrderStatus status, List<Product> products) {
 		this.employeeId = employeeId;
 		this.clientId = clientId;
 		this.date = date;
 		this.status = status;
-		this.productsId = productsId;
+		this.products = products;
 	}
-	
-	/**
-	 * Constructor with all the parameters.
-	 * 
-	 * @param id         order id
-	 * @param employeeId employee responsible
-	 * @param clientId   client id
-	 * @param date       date of the emitted order
-	 * @param status     order status
-	 * @param productsId products id included in order
-	 */
 
 
-	public Order(UUID id, String employeeId, String clientId, Date date, OrderStatus status, List<String> productsId) {
-		super();
+	public Order(UUID id, String employeeId, String clientId, Date date, OrderStatus status, List<Product> products) {
 		this.id = id;
 		this.employeeId = employeeId;
 		this.clientId = clientId;
 		this.date = date;
 		this.status = status;
-		this.productsId = productsId;
+		this.products = products;
 	}
-	
-	/**
-	 * @return order id
-	 */
+
+
 	public UUID getId() {
 		return id;
 	}
 
-	/**
-	 * @return employee id
-	 */
-	public String getEmployeeId() {
-		return employeeId;
-	}
-
-	/**
-	 * @return client id
-	 */
-	public String getClientId() {
-		return clientId;
-	}
-
-	/**
-	 * @return order date
-	 */
-	public Date getDate() {
-		return date;
-	}
-
-	/**
-	 * @return order status
-	 */
-	public OrderStatus getStatus() {
-		return status;
-	}
-
-	/**
-	 * @return order products by id
-	 */
-	public List<String> getProducts() {
-		return productsId;
-	}
-
-	/**
-	 * @param id to set order id
-	 */
 	public void setId(UUID id) {
 		this.id = id;
 	}
 
-	/**
-	 * @param employeeId to set responsible employee id
-	 */
+	public String getEmployeeId() {
+		return employeeId;
+	}
+
 	public void setEmployeeId(String employeeId) {
 		this.employeeId = employeeId;
 	}
 
-	/**
-	 * @param clientId to set client id
-	 */
+	public String getClientId() {
+		return clientId;
+	}
+
 	public void setClientId(String clientId) {
 		this.clientId = clientId;
 	}
 
-	/**
-	 * @param date to set order date
-	 */
+	public Date getDate() {
+		return date;
+	}
+
 	public void setDate(Date date) {
 		this.date = date;
 	}
 
-	/**
-	 * @param status to set order status
-	 */
+	public OrderStatus getStatus() {
+		return status;
+	}
+
 	public void setStatus(OrderStatus status) {
 		this.status = status;
 	}
 
-	/**
-	 * @param productsId to set order products id
-	 */
-	public void setProducts(List<String> productsId) {
-		this.productsId = productsId;
+	public List<Product> getProducts() {
+		return products;
 	}
 
-	@Override
-	public String toString() {
-		return "Order id=" + id + " [employeeId=" + employeeId + ", clientId=" + clientId + ", date=" + date
-				+ ", status=" + status + ", products=" + productsId + "]";
+	public void setProducts(List<Product> products) {
+		this.products = products;
 	}
-
 }
