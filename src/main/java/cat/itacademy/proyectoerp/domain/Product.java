@@ -13,8 +13,6 @@ import java.util.UUID;
 @Table(name = "products")
 public class Product {
 
-	// Products entity attributes
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -30,11 +28,6 @@ public class Product {
 	private UUID order_id;
 
 
-	// Constructors
-
-	/**
-	 * Constructor without parameters
-	 */
 	public Product() {
 	}
 
